@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import H from '@here/maps-api-for-javascript';
-import { APIKEY } from '../utils/constants';
+import { APIKEY } from '../../utils/constants';
 
 export default class AddressMap extends React.Component {
   constructor(props) {

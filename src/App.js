@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import DropArea from './components/DropArea';
+import DropArea from './components/droparea/DropArea';
 import './sass/App.scss';
-import Addresses from './components/Addresses';
-import Header from './components/Header';
+import Addresses from './components/addresses/Addresses';
+import Header from './components/header/Header';
 import { fetchAddresses } from './utils/api';
 
 function App() {
@@ -23,7 +23,9 @@ function App() {
       <DropArea loading={loading} processFile={processFile} />
       <div className="App__addresses">
         {loading ? (
-          <div className="loading">Loading...</div>
+          <div className="loading" data-testid="loading">
+            Loading...
+          </div>
         ) : (
           <Addresses loading={loading} addresses={addresses} />
         )}

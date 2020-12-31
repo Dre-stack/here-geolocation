@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { validateFile, formatFileSize } from '../utils/helpers';
+import { validateFile, formatFileSize } from '../../utils/helpers';
 
 const DropArea = ({ processFile, loading }) => {
   const [dropAreaActive, setDropAreaActive] = useState(false);
   const [file, setFile] = useState();
-  const [isNewFile, setIsNewFile] = useState(false);
   const [fileError, setFileError] = useState({
     status: false,
     message: '',
@@ -12,7 +11,6 @@ const DropArea = ({ processFile, loading }) => {
 
   const handleDrop = (e) => {
     e.preventDefault();
-    setIsNewFile(true);
     const file = e.dataTransfer.files[0];
     setFile(file);
     validateFile(file, setFileError);
@@ -21,6 +19,7 @@ const DropArea = ({ processFile, loading }) => {
   return (
     <div className="App__inputs">
       <div
+        data-testid="droparea"
         className={`droparea ${dropAreaActive ? 'active' : ''} ${
           fileError.status ? 'error' : ''
         }`}
@@ -37,15 +36,17 @@ const DropArea = ({ processFile, loading }) => {
         )}
       </div>
       {fileError.message && (
-        <div className="error">{fileError.message}</div>
+        <div data-testid="error-message" className="error">
+          {fileError.message}
+        </div>
       )}
 
       <button
         onClick={() => {
           processFile(file);
-          setIsNewFile(false);
         }}
-        disabled={!isNewFile || fileError.status || loading}
+        data-testid="show-addresses"
+        disabled={!file || fileError.status || loading}
         className="btn btn-primary"
       >
         Show Addresses
