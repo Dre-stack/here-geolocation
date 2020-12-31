@@ -1,0 +1,223 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap');
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    } //1800
+  }
+}
+$color-green: #54e9e2;
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+body {
+  font-size: 1.6rem;
+  font-family: 'Roboto', sans-serif;
+}
+
+.App {
+  width: 100vw;
+
+  &__header {
+    width: 100%;
+    height: 8rem;
+    display: flex;
+    padding: 0 20rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    align-items: center;
+    background-color: white;
+    border-bottom: 1px solid rgba($color: #000000, $alpha: 0.15);
+    .logo {
+      margin-right: 3rem;
+    }
+    @include respond(tab-port) {
+      padding: 0 5rem;
+    }
+    @include respond(phone) {
+      padding: 0 2rem;
+      height: 6rem;
+    }
+  }
+
+  &__inputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8rem;
+    @include respond(tab-port) {
+      padding: 0 5rem;
+    }
+    @include respond(phone) {
+      margin-top: 6rem;
+    }
+
+    .droparea {
+      margin: 2rem auto;
+      width: 50rem;
+      height: 10rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid black;
+      text-align: center;
+      @include respond(tab-port) {
+        width: 100%;
+      }
+      &.active {
+        border: 1px solid $color-green;
+        background: rgba($color: $color-green, $alpha: 0.1);
+      }
+      &.error {
+        border: 1px solid red;
+        background: rgba($color: red, $alpha: 0.1);
+      }
+    }
+    .error {
+      color: red;
+      margin: 1rem 0;
+    }
+  }
+
+  &__addresses {
+    width: 100%;
+    padding: 0 20rem;
+    margin-top: 4rem;
+    @include respond(tab-port) {
+      padding: 0 5rem;
+    }
+    @include respond(phone) {
+      padding: 0 2rem;
+    }
+    .loading {
+      font-size: 2rem;
+      text-align: center;
+    }
+    .address {
+      width: 100%;
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem 2rem;
+      line-height: 1.4;
+      text-align: center;
+      background-color: rgba($color: grey, $alpha: 0.1);
+      .btn {
+        margin-top: 1rem;
+      }
+      &__name {
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba($color: #000000, $alpha: 0.7);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .close-button {
+    background-color: white;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    height: 5rem;
+    width: 5rem;
+    font-size: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    @include respond(tab-port) {
+      width: 3rem;
+      height: 3rem;
+      font-size: 3rem;
+    }
+  }
+
+  .map {
+    width: 60rem;
+    height: 60rem;
+
+    @include respond(tab-port) {
+      height: 50rem;
+      width: 50rem;
+    }
+    @include respond(phone) {
+      height: 80%;
+      width: 95%;
+    }
+  }
+}
+
+.btn {
+  padding: 1.5rem 2rem;
+  color: #3f454d;
+  background: linear-gradient(278deg, #54e9e2, #78a9ff);
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+  &:hover {
+    // background: #78a9ff;
+    box-shadow: 1px 3px 5px 0px rgba(50, 50, 50, 0.49);
+  }
+  &.btn-secondary {
+    background: white;
+    border: 1px solid black;
+    &:hover {
+      background: black;
+      color: white;
+    }
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.4;
+    z-index: -1;
+    &:hover {
+      background: linear-gradient(278deg, $color-green #78a9ff);
+      color: #3f454d;
+    }
+  }
+  // &.btn-primary {
+  //   transition: all 0.3s;
+  //   &:hover {
+  //     background: #78a9ff;
+  //   }
+  // }
+}

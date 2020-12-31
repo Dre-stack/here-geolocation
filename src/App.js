@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import DropArea from './components/DropArea';
+import './sass/App.scss';
+import Addresses from './components/Addresses';
+import Header from './components/Header';
+import { fetchAddresses } from './utils/api';
 
 function App() {
+  const [addresses, setAddresses] = useState();
+  const [loading, setLoading] = useState(false);
+
+  const processFile = async (file) => {
+    setLoading(true);
+    const coordinatesArray = JSON.parse(await file.text());
+    const addressArray = await fetchAddresses(coordinatesArray);
+    setAddresses(addressArray);
+    setLoading(false);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <DropArea loading={loading} processFile={processFile} />
+      <div className="App__addresses">
+        {loading ? (
+          <div className="loading">Loading...</div>
+        ) : (
+          <Addresses loading={loading} addresses={addresses} />
+        )}
+      </div>
     </div>
   );
 }
