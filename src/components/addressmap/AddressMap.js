@@ -63,12 +63,13 @@ export default class AddressMap extends React.Component {
     return ReactDOM.createPortal(
       <div className="modal">
         <div
+          data-testid="close-button"
           className="close-button"
           onClick={() => this.props.setDisplay(false)}
         >
           &times;
         </div>
-        <div className="map" ref={this.ref} />{' '}
+        <div className="map" data-testid="map" ref={this.ref} />{' '}
       </div>,
 
       document.getElementById('modal')
