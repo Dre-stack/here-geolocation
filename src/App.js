@@ -11,10 +11,15 @@ function App() {
 
   const processFile = async (file) => {
     setLoading(true);
-    const coordinatesArray = JSON.parse(await file.text());
-    const addressArray = await fetchAddresses(coordinatesArray);
-    setAddresses(addressArray);
-    setLoading(false);
+    var reader = new FileReader();
+    let coordinatesArray;
+    reader.onload = async () => {
+      coordinatesArray = JSON.parse(reader.result);
+      const addressArray = await fetchAddresses(coordinatesArray);
+      setAddresses(addressArray);
+      setLoading(false);
+    };
+    reader.readAsText(file);
   };
 
   return (
